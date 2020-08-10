@@ -1,0 +1,43 @@
+2020-08-07 19:16:30 [scrapy.utils.log] INFO: Scrapy 2.2.1 started (bot: job)
+2020-08-07 19:16:30 [scrapy.utils.log] INFO: Versions: lxml 4.5.2.0, libxml2 2.9.5, cssselect 1.1.0, parsel 1.6.0, w3lib 1.22.0, Twisted 20.3.0, Python 3.7.2 (tags/v3.7.2:9a3ffc0492, Dec 23 2018, 22:20:52) [MSC v.1916 32 bit (Intel)], pyOpenSSL 19.1.0 (OpenSSL 1.1.1g  21 Apr 2020), cryptography 2.9.2, Platform Windows-10-10.0.18362-SP0
+2020-08-07 19:16:30 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.selectreactor.SelectReactor
+2020-08-07 19:16:30 [scrapy.crawler] INFO: Overridden settings:
+{'BOT_NAME': 'job',
+ 'DOWNLOAD_DELAY': 5,
+ 'DUPEFILTER_CLASS': 'scrapy.dupefilters.BaseDupeFilter',
+ 'LOGSTATS_INTERVAL': 0,
+ 'LOG_FILE': './log.log',
+ 'NEWSPIDER_MODULE': 'job.spiders',
+ 'SPIDER_MODULES': ['job.spiders'],
+ 'USER_AGENT': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
+               '(KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36'}
+2020-08-07 19:16:31 [scrapy.extensions.telnet] INFO: Telnet Password: 1c3f42f543b32138
+2020-08-07 19:16:31 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole']
+2020-08-07 19:16:32 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2020-08-07 19:16:32 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2020-08-07 19:16:32 [scrapy.middleware] INFO: Enabled item pipelines:
+['job.pipelines.JobPipeline']
+2020-08-07 19:16:32 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
+2020-08-07 19:17:44 [scrapy.core.engine] INFO: Spider opened
+2020-08-07 19:17:44 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET file:///D:/spider/job/www.baidu.com> (failed 1 times): [Errno 2] No such file or directory: 'D:\\spider\\job\\www.baidu.com'
+2020-08-07 19:17:51 [scrapy.downloadermiddlewares.retry] DEBUG: Retrying <GET file:///D:/spider/job/www.baidu.com> (failed 2 times): [Errno 2] No such file or directory: 'D:\\spider\\job\\www.baidu.com'
+2020-08-07 19:17:55 [scrapy.downloadermiddlewares.retry] ERROR: Gave up retrying <GET file:///D:/spider/job/www.baidu.com> (failed 3 times): [Errno 2] No such file or directory: 'D:\\spider\\job\\www.baidu.com'
+2020-08-07 19:19:49 [scrapy.core.engine] DEBUG: Crawled (200) <GET https://search.51job.com/list/000000,000000,0000,00,9,99,%25E7%25A8%258B%25E5%25BA%258F%25E5%2591%2598,2,1.html?lang=c%2F&postchannel=0000&workyear=99&cotype=99&degreefrom=99&jobterm=99&companysize=99&ord_field=0&dibiaoid=0&line=&welfare=> (referer: None)

@@ -14,11 +14,14 @@ class Bangumi_spider(object):
                           "Chrome/81.0.4044.122 Safari/537.36"}
         self.data = []
         self.urls = 'https://bangumi.tv/anime/browser?sort=rank&page='
+        self.proxy = {
+            'http': '115.218.4.0:9000'
+        }
 
     def parse_url(self, url_str):
         print('正在进行任务:', url_str)
         try:
-            res = requests.get(url_str, headers=self.header)
+            res = requests.get(url_str, headers=self.header,proxies=self.proxy)
             # time.sleep(5)
             return res.content
 

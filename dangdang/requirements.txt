@@ -1,0 +1,2 @@
+scrapy>=2.2.1
+scrapy-redis>=0.6.8

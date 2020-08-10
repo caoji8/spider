@@ -7,5 +7,11 @@
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://47.100.92.222:3306</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="aliyun" uuid="50c31010-5d3b-48f7-a6ed-7481c6ab1563">
+      <driver-ref>mongo</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb://47.100.92.222:27017</jdbc-url>
+    </data-source>
   </component>
 </project>

@@ -30,7 +30,24 @@ class WxitSpider():
         return url_list
 
     def save(self):
-        pass
+        with open('data.json', 'r', encoding='utf-8') as load_f:
+            load_dict = json.load(load_f)
+            num_image = len(load_dict)
+            if num_image > 0:
+                if len(self.data > 0):
+                    for image in self.data:
+                        name = load_dict[image]['name']
+                        info = load_dict[image]['info']
+                        load_dict.append({'name':name,'info':info})
+                    with open('data.json', 'w', encoding='utf-8') as load_w:
+                        json.dump(load_dict,load_w,ensure_ascii=False)
+                        print('写入完成')
+                        self.data = []
+            elif num_image == 0:
+                with open('data.json', 'w', encoding='utf-8') as load_w:
+                    json.dump(self.data, load_w, ensure_ascii=False)
+                    print('写入完成')
+                    self.data = []
 
     def parse_url_get(self, url):
         response = requests.get(url, headers=self.header, cookies=self.cookie)
@@ -83,18 +100,20 @@ class WxitSpider():
             book_list = self.get_book_name_list(tree_html,'//div[@class="stepright2"]//a[@style="cursor:hand;"]/text()')
             self.book_list += book_list
 
+        # 所有图书队列
         url_list = self.get_url_list()
-
         for url in url_list:
             url = url + '1'
             print('当前外部',url)
+            # 迭代爬取
             self.get_book_list(url)
-            with open('data.json','a+',encoding='utf-8') as w:
-                json.dump(self.data,w,ensure_ascii=False)
-                print('写入完成')
-                self.data = []
+            # with open('data.json','a+',encoding='utf-8') as w:
+            #     json.dump(self.data,w,ensure_ascii=False)
+            #     print('写入完成')
+            #     self.data = []
 
 
 if __name__ == '__main__':
     wxit = WxitSpider()
     wxit.run()
+
