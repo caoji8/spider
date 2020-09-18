@@ -3,18 +3,19 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 
-import scrapy_pro
+import scrapy
 
 
-class Bangumiv2Item(scrapy_pro.Item):
+class Bangumiv2Item(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy_pro.Field()
-    parse_name = scrapy_pro.Field()
-    name = scrapy_pro.Field()
-    price = scrapy_pro.Field()
+    # name = scrapy.Field()
+    parse_name = scrapy.Field()
+    name = scrapy.Field()
+    price = scrapy.Field()
 
-class MusicContent(scrapy_pro.Item):
-    parse_name = scrapy_pro.Field()
-    from_user = scrapy_pro.Field()
-    content = scrapy_pro.Field()
-    music_name = scrapy_pro.Field()
+
+class MusicContent(scrapy.Item):
+    parse_name = scrapy.Field()
+    from_user = scrapy.Field()
+    content = scrapy.Field()
+    music_name = scrapy.Field()

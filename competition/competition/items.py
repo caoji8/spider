@@ -3,17 +3,26 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 
-import scrapy_pro
+import scrapy
 
-
-class CompetitionItem(scrapy_pro.Item):
+class CompetitionItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy_pro.Field()
-    brand = scrapy_pro.Field()
-    menu = scrapy_pro.Field()
-    models = scrapy_pro.Field()
-    level = scrapy_pro.Field()
-    model = scrapy_pro.Field()
-    l_safe = scrapy_pro.Field()
-    r_pro = scrapy_pro.Field()
-    b_eval = scrapy_pro.Field()
+    # name = scrapy.Field()
+    # 品牌
+    brand = scrapy.Field()
+    # 生产厂家
+    menu = scrapy.Field()
+    # 评测车型
+    models = scrapy.Field()
+    # 价格
+    price = scrapy.Field()
+    # 车辆级别
+    level = scrapy.Field()
+    # 车辆型号
+    model = scrapy.Field()
+    # 安全装备配置
+    l_safe = scrapy.Field()
+    # 分指数项目
+    r_pro = scrapy.Field()
+    # 各项测评明细
+    b_eval = scrapy.Field()

@@ -102,7 +102,7 @@ class WxitSpider(threading.Thread):
         #         t = threading.Thread(target=self.get_book_list, args=(url,))
         #         t.start()
         #     # self.get_book_list(url)
-        # with open('data.json', 'a+', encoding='utf-8') as w:
+        # with open('wuxi.json', 'a+', encoding='utf-8') as w:
         #     json.dump(self.data, w, ensure_ascii=False)
         #     print('写入完成')
 
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     wxit = WxitSpider()
     wxit.run()
     # papers = []
-    # with open('data.json', 'r', encoding='utf-8') as file:
+    # with open('wuxi.json', 'r', encoding='utf-8') as file:
     #     for line in file.readlines():
     #         dic = json.loads(line)
     #         papers.append(dic)

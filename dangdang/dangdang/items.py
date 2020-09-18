@@ -3,10 +3,10 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/items.html
 
-import scrapy_pro
+import scrapy
 
 
-class DangdangItem(scrapy_pro.Item):
+class DangdangItem(scrapy.Item):
     # define the fields for your item here like:
-    # name = scrapy_pro.Field()
+    # name = scrapy.Field()
     pass

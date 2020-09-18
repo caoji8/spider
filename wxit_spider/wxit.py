@@ -107,7 +107,7 @@ class WxitSpider():
             print('当前外部',url)
             # 迭代爬取
             self.get_book_list(url)
-            # with open('data.json','a+',encoding='utf-8') as w:
+            # with open('wuxi.json','a+',encoding='utf-8') as w:
             #     json.dump(self.data,w,ensure_ascii=False)
             #     print('写入完成')
             #     self.data = []

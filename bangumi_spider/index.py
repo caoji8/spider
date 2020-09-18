@@ -62,7 +62,7 @@ class Bangumi_spider(object):
         #     r = self.parse_url(self.urls+str(i))
         #     data = self.xpath_html(r)
         #     self.save(data)
-        # with open('data.json', 'w', encoding='utf-8') as w:
+        # with open('wuxi.json', 'w', encoding='utf-8') as w:
         #     json.dump(self.data, w, ensure_ascii=False)
         #     print('写入完成...')
 

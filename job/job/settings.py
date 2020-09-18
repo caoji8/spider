@@ -13,6 +13,9 @@ SPIDER_MODULES = ['job.spiders']
 NEWSPIDER_MODULE = 'job.spiders'
 # LOG_LEVEL = 'WARNING'
 
+custom_settings={
+   'JOBDIR': './job'
+}
 
 LOG_FILE = "./log.log"
 

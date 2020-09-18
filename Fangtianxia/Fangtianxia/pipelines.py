@@ -12,24 +12,25 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class FangtianxiaPipeline:
 
     @classmethod
-    def from_crawler(cls,crawler):
-        cls.DB_URL = crawler.settings.get('MONGO_DB_URL','mongodb://47.100.92.222:27017')
-        cls.DB_NAME = crawler.settings.get('MONGO_DB_NAME','fangtianxia')
+    def from_crawler(cls, crawler):
+        cls.DB_URL = crawler.settings.get('MONGO_DB_URL', 'mongodb://47.100.92.222:27017')
+        cls.DB_NAME = crawler.settings.get('MONGO_DB_NAME', 'fangtianxia')
         return cls()
 
-    def open_spider(self,spider):
+    def open_spider(self, spider):
         self.client = pymongo.MongoClient(self.DB_URL)
         self.db = self.client[self.DB_NAME]
 
-    def close_spider(self,spider):
+    def close_spider(self, spider):
         self.client.close()
 
     def process_item(self, item, spider):
         collection = self.db[spider.name]
-        post = dict(item) if isinstance(item,Item) else item
+        post = dict(item) if isinstance(item, Item) else item
         collection.insert_one(post)
         print('写入完成')
         logger.debug(item)

@@ -1,0 +1,354 @@
+	DN 	NN	ZK	JN 	RM
+master1		1	1	1	1
+slave1	1	1	1	1	1
+salave2	1		1	1
+
+/home/hadoop/hadoop-2.6.0/etc/hadoop
+
+-----------------------------core-site.xml
+// namenode地址
+fs.defaultFS
+hdfs://myService
+
+// hadoop产生文件的存储目录
+hadoop.tmp.dir
+/home/hadoop/data
+
+// zookeeper
+ha.zookeeper.quorum
+master1:2181,slave1:2181,slave2:2181
+
+----------------------------hdfs-site.xml---------16
+// namenode元数据存储位置
+dfs.namenode.name.dir
+/home/hadoop/data/namenode
+
+// datanode元数据存储位置
+dfs.datanode.data.dir
+/home/hadoop/data/datanode
+
+// 在文件被写入的时候，每一块将要被复制多少份
+dfs.replication
+2
+//HDFS NN的逻辑名称
+dfs.nameservices
+myService
+
+// 给定服务逻辑名称myhdfs的节点列表，如nn1、nn2。
+dfs.ha.namenodes.myService
+nn1,nn2
+
+// myhdfs中nn1对外服务的RPC地址。
+dfs.namenode.rpc-address.myService.nn1
+master1:8020
+
+dfs.namenode.rpc-address.myService.nn2
+slave1:8020
+
+// myhdfs中nn1对外服务http地址。
+dfs.namenode.http-address.myService.nn1
+master1:50070
+
+dfs.namenode.http-address.myService.nn2
+slave1:50070
+
+// jn JournalNode的服务地址。
+dfs.namenode.shared.edits.dir
+qjournal://master1:8485;slave1:8485;slave2:8485
+
+// jn JournalNode在本地磁盘存放数据的位置。
+dfs.journalnode.edits.dir
+/home/hadoop/data/journal
+
+
+dfs.client.failover.proxy.provider.myService
+org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider
+
+// 配置隔离机制，通常为sshfence。
+dfs.ha.fencing.methods
+sshfenced
+shell(true)
+
+dfs.ha.fencing.ssh.private-key-files
+/root/.ssh/id_rsa
+
+// 是否开启NameNode失败自动切换。
+dfs.ha.automatic-failover.enabled
+true
+
+
+// ssh连接失效时间
+dfs.ha.fencing.ssh.connect-timeout
+3000
+
+
+---------------------------map-site.xml------3
+mapreduce.framework.name
+yarn
+
+mapreduce.jobhistory.address
+master1:10020
+
+mapreduce.jobhistory.webapp.address
+master1:19888
+
+------------------------yarn-site.xml-----------------9
+yarn.resourcemanager.ha.enabled
+true
+
+yarn.resourcemanager.cluster-id
+HARM
+
+// jn
+yarn.resourcemanager.ha.rm-ids
+rm1,rm2
+
+// rm
+yarn.resourcemanager.hostname.rm1
+master1
+
+// rm
+yarn.resourcemanager.hostname.rm2
+master2
+
+// zookeeper
+yarn.resourcemanager.zk-address
+master1:2181,slave1:2181,slave2:2181
+
+yarn.resourcemanager.store.class
+org.apache.hadoop.yarn.server.resourcemanager.recovery.ZKRMStateStore
+
+yarn.resourcemanager.ha.automatic-failover.enabled
+true
+
+yarn.nodemanager.aux-services
+mapreduce_shuffle
+
+
+
+步骤：
+1、解压三个gz文件。
+	设置免密访问
+	ssh-keygen -t rsa
+	cd ~/.ssh
+	rm -rf authorized_keys
+	cat id_rsa.pub >>authorized_keys
+	ssh-copy-id slaves
+
+
+2、配置jdk环境变量(vi /etc/profile)：
+	export JAVA_HOME=/home/jdk
+	export HADOOP_HOM=/home/hadoop/hadoop-2.6.0
+	export ZOOKEEPER_HOME=/home/zk
+	export PATH=.:$PATH:${JAVA_HOME}/bin:${HADOOP_HOME}/bin:${HADOOP_HOME}/sbin:${ZOOKEEPER_HOME}/bin
+	export CLASSPATH=.:${JAVA_HOME}/jre/lib/rt.jar:${JAVA_HOME}/lib/dt.jar:${JAVA_HOME}/lib/tools.jar
+    export PATH=.:$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$ZOOKEEPER_HOME/bin
+
+3、编写脚本文件：
+vi c.sh(执行命令ssh)
+a=(master1 slave1 slave2)
+for((i=$1;i<=$2;i++));
+do
+	echo "~~~~~~~~${a[$i]}~~~~~~~~~"
+	ssh  root@${a[$i]} "source /etc/profile;$3"
+done
+
+vi d.sh(文件传输scp)
+a=(master1 slave1 slave2)
+for((i=$1;i<=$2;i++));
+do
+	echo "~~~~~~~~${a[$i]}~~~~~~~~~"
+	scp -r $3 root@${a[$i]}:$3
+done
+
+利用脚本：
+关闭防火墙：systemctl stop firewalld
+删除防火墙：systemctl disable firewalld
+
+
+4、将配好的环境变量和解压文件传输到别的主机上；验证jdk和hadoop是否成功
+
+5、配置zk
+cp /home/zk/conf/zoo_example.cfg /home/zk/conf/zoo.cfg
+vi zoo.cfg
+dataDir = /home/zk/data
+server.1=master1:2888:3888
+server.2=slave1:2888:3888
+server.3=salve2:2888:3888
+
+在/home/zk 下创建data目录
+脚本发送zk文件
+脚本将对应myid写入主机zk/data下。
+脚本启动zkServer.sh start
+脚本查看状态zkServer.sh status
+
+
+	    DN 	NN	ZK	JN 	RM
+master1		1	1	1	1
+slave1	1	1	1	1	1
+salave2	1		1	1
+初始化hadoop并启动：
+1、0-0 :hdfs zkfc -formatZK
+2、0 2 :hadoop-daemon.sh start journalnode
+3、0 0 :hdfs namenode -format
+4、0 0 :hadoop-daemon.sh start namenode
+5、1 1 :hdfs namenode -bootstrapStandby
+6、1 1 :hadoop-daemon.sh start namenode
+7、0 0 :hadoop-daemon.sh start datanode
+8、0 0 :start-yarn.sh
+9、1-1 :yarn-daemon.sh start resourcemanager
+10、0 1 :hadoop-daemon.sh start zkfc
+
+export PATH = .:$PATH:$JAVA_HOME/bin:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$ZK_HOME/bin
+
+hdfs zkfc -formatZK
+
+hadoop-daemons.sh start journalnode
+
+hdfs namenode -format
+
+hadoop-daemon.sh start namenode
+
+m2 hdfs namenode -bootstrapStandby
+
+start-dfs.sh
+start-yarn.sh
+m2 yarn-deamon.sh start resourcemanager
+
+mr-tab start historyserver
+
+
+data =
+server.1:2888:3888
+server.2:2888:3888
+server.3:2888:3888
+
+hadoop-env
+
+zkServer.sh start
+zkServer.sh status
+
+hdfs zkfc -formatZK
+
+hadoop-daemons.sh start journalnode
+
+hdfs namenode -format
+hadoop-daemon.sh start namenode
+m2 hdfs namenode -bootstrapStandby
+
+start-dfs.sh
+start-yarn.sh
+m2 yarn-daemon.sh start resourcemanager
+mr-tab start historyserver
+
+<property>
+                <name>hbase.rootdir</name>
+                <value>hdfs://master1:8020/hbase</value>
+        </property>
+        <property>
+                <name>hbase.cluster.distributed</name>
+                <value>true</value>
+        </property>
+        <property>
+                <name>hbase.zookeeper.quorum</name>
+                <value>master2:2181,slave1:2181,slave2:2181</value>
+        </property>
+        <property>
+                <name>hbase.zookeeper.property.datadir</name>
+                <value>/home/zk/data</value>
+        </property>
+<property>
+                <name>hbase.rootdir</name>
+                <value>hdfs://master1:8020/hbase</value>
+        </property>
+        <property>
+                <name>hbase.cluster.distributed</name>
+                <value>true</value>
+        </property>
+        <property>
+                <name>hbase.zookeeper.quorum</name>
+                <value>master2:2181,slave1:2181,slave2:2181</value>
+        </property>
+        <property>
+                <name>hbase.zookeeper.property.datadir</name>
+                <value>/home/zk/data</value>
+        </property>
+
+hdfs zkfc -formatZK
+
+hadoop-daemons.sh start journalnode
+hdfs namenode -format
+hadoop-daemon.sh start namenode
+m2 hdfs namenode -bootstrapStandby
+
+start-dfs.sh
+start-yarn,sh
+m2 yarn-daemon.sh start resourcemanager
+
+mr-tab start historyserver
+
+
+
+hdfs zkfc -formatZK   --》 ZKFC初始化
+
+hadoop-daemons.sh start journalnode --> jn
+
+hdfs namenode -format  -- namenode 初始化 1
+hadoop-daemon.sh start namenode -- namenode
+m2 hdfs namenode -bootstrapStandby -- namenode 同步数据 namenode 2
+
+
+start-dfs.sh -- datanode  nodemanager zkfc
+start-yarn.sh —— yarn 1
+m2 yarn-daemon.sh start resourcemanager -- res  2
+mr-tab start historyserver
+
+       <property>
+                <name>hbase.rootdir</name>
+                <value>hdfs://master1:8020/hbase</value>
+        </property>
+        <property>
+                <name>hbase.cluster.distributed</name>
+                <value>true</value>
+        </property>
+        <property>
+                <name>hbase.zookeeper.quorum</name>
+                <value>master2:2181,slave1:2181,slave2:2181</value>
+        </property>
+        <property>
+                <name>hbase.zookeeper.property.datadir</name>
+                <value>/home/zk/data</value>
+        </property>
+
+
+<configuration>
+        <property>
+                <name>javax.jdo.option.ConnectionURL</name>
+                <value>jdbc:mysql://master1:3306/metastore?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+        </property>
+        <property>
+                <name>javax.jdo.option.ConnectionDriverName</name>
+                <value>com.mysql.jdbc.Driver</value>
+        </property>
+        <property>
+                <name>javax.jdo.option.ConnectionUserName</name>
+                <value>root</value>
+        </property>
+        <property>
+                <name>javax.jdo.option.ConnectionPassword</name>
+                <value>123</value>
+        </property>
+</configuration>
+
+
+export HADOOP_HOME=/home/hadoop
+export HADOOP_CONF_DIR=/home/hadoop/etc/hadoop
+export JAVA_HOME=/home/jdk
+export SPARK_HOME=/home/spark
+export SPARK_WORKER_MEMORY=2G
+export SPARK_MASTER_IP=192.168.1.71
+export SPARK_LOCAL_DIRS=/home/spark
+export SPARK_LIBARY_PATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$HADOOP_HOME/lib/native
+
+export PATH=$SCALA_HOME/bin:$SPARK_HOME/bin:$SQOOP_HOME/bin:$HBASE_HOME/bin:$KAFKA_HOME/bin:$FLUME_HOME/bin:$PATH:$JAVA_HOME/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+

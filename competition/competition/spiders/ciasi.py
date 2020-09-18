@@ -1,10 +1,12 @@
-import scrapy_pro
+import scrapy
+import re
 from competition.items import CompetitionItem
 
-class CiasiSpider(scrapy_pro.Spider):
+class CiasiSpider(scrapy.Spider):
     name = 'ciasi'
     allowed_domains = ['ciasi.org.cn']
-    start_urls = ['http://www.ciasi.org.cn/Home/safety/index?sid=15&bid=&cid=&sss=1&year=51,50']
+    # start_urls = ['http://www.ciasi.org.cn/Home/safety/index?sid=15&bid=&cid=&sss=1&year=51,50']
+    start_urls = ['http://www.ciasi.org.cn/Home/safety/index?sid=15&bid=&cid=&sss=1&year=52,51,50,49']
 
     def parse(self, response):
         list_item = response.xpath("//div[@class='eval_by_item']")
@@ -27,7 +29,7 @@ class CiasiSpider(scrapy_pro.Spider):
             # yield items
             if next_url is not None:
                 next_url = 'http://www.ciasi.org.cn/' + next_url
-                yield scrapy_pro.Request(
+                yield scrapy.Request(
                     next_url,
                     callback= self.parse_detail,
                     meta = {'item': items}
@@ -115,6 +117,11 @@ class CiasiSpider(scrapy_pro.Spider):
         evaluation = evaluation + eval_table_data
         evaluation.append({'price':price_car})
         main_item['b_eval'] = evaluation
+
+        price = response.xpath("//div[@class='pa_t_bt']/div[@class='pa_bt_le']/span/text()").extract_first()
+        price = re.findall(r"\d+\.?\d*",price)
+        main_item['price'] = price
+
 
         yield main_item
         # //div[@class="par_p_block"]//table//div[@class='pa_i_le' or @class='pa_i_xl']/p

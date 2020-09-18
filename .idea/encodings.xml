@@ -6,6 +6,23 @@
     <file url="file://$PROJECT_DIR$/Fangtianxia/Fangtianxia/settings.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Fangtianxia/Fangtianxia/spiders/heifei.py" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Fangtianxia/scrapy.cfg" charset="UTF-8" />
-    <file url="PROJECT" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/Tencent_yiqing_spider/tencent_index.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/dangdang/dangdang/settings.py" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/hadoop.txt" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/juejin/juejin/items.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/juejin/juejin/spiders/hot.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/juejin/juejin/spiders/sf.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/lrts/lrts/spiders/rw.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pct/pct/pipelines.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/pct/pct/spiders/chinapct.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sifou/sifou/spiders/sf.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wiwj/scrapy.cfg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wiwj/wiwj/items.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wiwj/wiwj/pipelines.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wiwj/wiwj/settings.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wiwj/wiwj/spiders/__init__.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wiwj/wiwj/spiders/nanjing.py" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ygwz/ygwz/pipelines.py" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

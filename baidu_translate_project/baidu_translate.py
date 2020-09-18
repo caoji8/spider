@@ -54,7 +54,8 @@ class BaiduTranslate(object):
 
 
 if __name__ == '__main__':
-    baidu_translate = BaiduTranslate('初始')
+    text = input('请输入')
+    baidu_translate = BaiduTranslate(text)
     baidu_translate.run()
 # query: why are you good
 # from: zh

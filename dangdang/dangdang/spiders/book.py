@@ -1,13 +1,12 @@
-import scrapy_pro
+import scrapy
 from scrapy_redis.spiders import RedisSpider
 
 
 class BookSpider(RedisSpider):
     name = 'book'
-    allowed_domains = ['www.book.dangdang.com','category.dangdang.com']
+    allowed_domains = ['www.book.dangdang.com', 'category.dangdang.com']
     # start_urls = ['http://book.dangdang.com/01.54.htm?ref=book-01-A']
     redis_key = 'Dangdang'
-
 
     def parse(self, response):
         div_list = response.xpath("//div[@class='level_one ']")
@@ -15,13 +14,13 @@ class BookSpider(RedisSpider):
             next_url = div.xpath("./dl/dt/a/@href").extract_first()
             book_name = div.xpath("./dl/dt/a/@title").extract_first()
             if next_url is not None:
-                yield scrapy_pro.Request(
+                yield scrapy.Request(
                     next_url,
                     callback=self.parse_book,
-                    meta = {"name": book_name}
+                    meta={"name": book_name}
                 )
 
-    def parse_book(self,response):
+    def parse_book(self, response):
         name = response.meta['name']
         book_list = response.xpath("//li[contains(@class,'line')]")
         for book in book_list:
@@ -44,7 +43,7 @@ class BookSpider(RedisSpider):
         next_url_2 = response.xpath("//li[@class='next']/a/@href").extract_first()
         if next_url_2 is not None:
             next_url_2 = 'http://category.dangdang.com' + next_url_2
-            yield scrapy_pro.Request(
+            yield scrapy.Request(
                 next_url_2,
                 callback=self.parse_book,
                 meta={"name": name}

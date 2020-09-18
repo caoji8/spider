@@ -26,12 +26,13 @@ class CompetitionPipeline:
 
     def insert_into_sql(self, item):
         sql = """
-        INSERT INTO wxit_car(`brand`,`menu`,`models`,`level`,`model`,`l_safe`,`r_pro`,`b_eval`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s);
+        INSERT INTO wxit_car(`brand`,`menu`,`price`,`models`,`level`,`model`,`l_safe`,`r_pro`,`b_eval`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s);
         """
         try:
             self.db_cur.execute(sql, (
                 str(item['brand']),
                 str(item['menu']),
+                str(item['price'][0]),
                 str(item['models']),
                 str(item['level']),
                 str(item['model']),

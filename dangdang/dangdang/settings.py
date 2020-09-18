@@ -13,9 +13,11 @@ SPIDER_MODULES = ['dangdang.spiders']
 NEWSPIDER_MODULE = 'dangdang.spiders'
 
 # LOG_LEVEL = 'WARNING'
-
+# dupefilter_class 去重类
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+# 调度器类
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# 防止非意外清空请求队列
 SCHEDULER_PERSIST = True
 
 REDIS_HOST = "39.98.121.51"
@@ -31,7 +33,8 @@ MYSQL_USER = 'root'
 MYSQL_PASSWORD = '123456'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 ' \
+             'Safari/537.36 '
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
