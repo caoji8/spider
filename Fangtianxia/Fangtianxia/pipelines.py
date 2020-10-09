@@ -9,6 +9,8 @@ from itemadapter import ItemAdapter
 from scrapy import Item
 import pymongo
 import logging
+import pymysql
+from scrapy.exporters import JsonLinesItemExporter
 
 logger = logging.getLogger(__name__)
 
@@ -35,3 +37,48 @@ class FangtianxiaPipeline:
         print('写入完成')
         logger.debug(item)
         return item
+
+
+class JsonPipelines:
+    def __init__(self):
+        self.file = open('data.json', 'wb')
+        self.exporters = JsonLinesItemExporter(self.file, ensure_ascii=False, encoding='utf-8')
+        self.file.write(b'[')
+        self.exporters.start_exporting()
+
+    def process_item(self, item, spider):
+        self.exporters.export_item(item)
+        self.file.write(b',')
+
+    def close_item(self, spider):
+        self.file.write(b']')
+        self.file.close()
+
+
+class MysqlPipelines:
+    def __init__(self):
+        self.db = pymysql.connect(host='host', port='port', db='db', user='user', passwd='passwd')
+        self.cur = self.db.cursor()
+
+    def process_item(self, item, spider):
+        sql = ''
+        self.cur.execute(sql)
+        self.db.commit()
+
+    def close_spider(self, spider):
+        self.db.close()
+
+
+class MongoPipelines:
+    def __init__(self):
+        self.client = pymongo.MongoClient('')
+        self.db = self.client['DBNAME']
+
+    def process_item(self, item, spider):
+        collection = self.db[spider.name]
+        collection.insert_one(item)
+
+    def close_spider(self):
+        self.client.close()
+
+# [\u4e00-\u9fa5]+

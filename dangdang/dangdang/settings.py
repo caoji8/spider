@@ -15,7 +15,7 @@ NEWSPIDER_MODULE = 'dangdang.spiders'
 # LOG_LEVEL = 'WARNING'
 # dupefilter_class 去重类
 DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
-# 调度器类
+# 调度器类 scheduler  scheduler_persist
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 # 防止非意外清空请求队列
 SCHEDULER_PERSIST = True

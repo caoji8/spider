@@ -6,6 +6,15 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+# DUPEFILTER_CLASS = 'scrapy_redis.dupefilter.RFPDupeFilter'
+# SCHEDULER = 'scrapy_redis.scheduler.Scheduler'
+# SCHEDULER_PERSIST = True
+# REDIS_HOST = ''
+# REDIS_PORT = 6379
+# # params
+# REDIS_PARAMS =  {
+#     'password': ''
+# }
 
 BOT_NAME = 'Fangtianxia'
 

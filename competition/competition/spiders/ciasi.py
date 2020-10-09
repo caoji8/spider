@@ -92,7 +92,7 @@ class CiasiSpider(scrapy.Spider):
         main_item['r_pro'] = pro_index_list
 
         #TODO 下层数据
-        evaluation_details = response.xpath("//div[@class='pa_t_ds']/p/text()| //td[@class='p_h_les']/div//p/text()").extract()
+        evaluation_details = response.xpath("//div[@class='pa_t_ds']/p/text() | //td[@class='p_h_les']/div//p/text()").extract()
         evaluation_price = response.xpath("//div[@class='pa_t_bz']/span/text() | //div[@class='pa_t_bz']/div[@class='pa_i_rg']/span/text()").extract()
 
         evaluation = [{de:pr} for de,pr in zip(evaluation_details,evaluation_price)]

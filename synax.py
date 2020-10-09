@@ -1,5 +1,5 @@
 from collections import defaultdict
-
+# -*- coding: utf-8 -*
 # lamda 箭头函数
 # b = lambda : True
 two_sum = (lambda x, y: x + y)(3, 4)
@@ -114,4 +114,5 @@ popitem() 删除随机键值对
 setdefault() 返回key的value if None return None
 
 """
-
+import pymongo
+db = pymongo.MongoClient

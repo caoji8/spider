@@ -40,6 +40,7 @@ class BookSpider(RedisSpider):
                 item['time'] = book_msg[1]
                 item['press'] = book_msg[2]
                 yield item
+
         next_url_2 = response.xpath("//li[@class='next']/a/@href").extract_first()
         if next_url_2 is not None:
             next_url_2 = 'http://category.dangdang.com' + next_url_2

@@ -216,27 +216,186 @@
     <value>/home/zk/data</value>
 </property>
 
-<configuration>
-        <property>
-                <name>javax.jdo.option.ConnectionURL</name>
-                <value>jdbc:mysql://master1:3306/metastore?createDatabaseIfNotExist=true&amp;useSSL=false</value>
-        </property>
-        <property>
-                <name>javax.jdo.option.ConnectionDriverName</name>
-                <value>com.mysql.jdbc.Driver</value>
-        </property>
-        <property>
-                <name>javax.jdo.option.ConnectionUserName</name>
-                <value>root</value>
-        </property>
-        <property>
-                <name>javax.jdo.option.ConnectionPassword</name>
-                <value>123</value>
-        </property>
-</configuration>
-<!--Ri4tQdZa)*;!-->
-
 <property>
     <name>javax.jdo.option.ConnectionURL</name>
-    <value>jdbc:mysql://master:3306/metastore</value>
+            jdbc:mysql://master1:3306/metastore?createDatabaseIfNotExist=true&amp;useSSL=false
+    <value>jdbc:mysql://master:3306/metastore?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+</property>
+<property>
+    <name>javax.jdo.option.ConnectionDriverName</name>
+    <value>com.mysql.jdbc.Driver</value>
+</property>
+<property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>root</value>
+</property>
+<property>
+    <name>javax.jdo.option.Connection</name>
+    <value>123456</value>
+</property>
+
+ConnectionURL
+jdbc:mysql://master:3306/metastore?createDatabaseIfNotExist=true&amp;useSSL=false
+ConnectionDriverName
+com.mysql.jdbc.Driver
+ConnectionUserName
+root
+ConnectionPassword
+123456
+
+<property>
+    <name>hbase.rootdir</name>
+          hbase.rootdir
+    <value>hdfs://master:8020/hbase</value>
+</property>
+<property>
+    <name>hbase.rootdir</name>
+    <value>hdfs://master:8020/hbase</value>
+</property>
+<property>
+    <name>hbase.cluster.distributed</name>
+    <value>true</value>
+</property>
+<property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>master:2181,slave1:2181,slave2:2181</value>
+</property>
+<property>
+    <name>hbase.zookeeper.property.datadir</name>
+    <value>/usr/local/src/zk/data</value>
+</property>
+<property>
+    <name>hbase.cluster.distributed</name>
+            hbase.cluster.distributed
+    <value>true</value>
+</property>
+<property>
+    <name>hbase.zookeeper.quorum</name>
+    hbase.zookeeper.quorum
+    <value>master:2181,slave:2181,slave2:2181</value>
+</property>
+<property>
+    <name>hbase.zookeeper.property.datadir</name>
+            hbasezookeeperpropertydatadir
+    <value>/usr/local/src/zk/data</value>
+</property>
+
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:mysql://master:3306/metastore?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>com.mysql.jdbc.Driver</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>root</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>123456</value>
+    </property>
+</configuration>
+
+
+core
+<configuration>
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/usr/local/src/hadoop/data</value>
+    </property>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://master:8020</value>
+    </property>
+</configuration>
+
+
+hdfs
+<configuration>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>/usr/local/src/hadoop/data/namenode</value>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>/usr/local/src/hadoop/data/datanode</value>
+    </property>
+    <property>
+        <name>dfs.replication</name>
+        <value>3</value>
+    </property>
+      <property>
+        <name>dfs.namenode.http.address</name>
+        <value>master:50070</value>
+    </property>
+    <property>
+        <name>dfs.secondary.http.address</name>
+        <value>slave1:50090</value>
+    </property>
+</configuration>
+
+
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:mysql://localhost:3306/metastore?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionDriver</name>
+        <value>com.mysql.jdbc.Driver</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>root</value>
+    </property>
+    <property>
+        <name>javax.jdo.option.ConnectionPassWord</name>
+        <value>123456</value>
+    </property>
+</configuration>
+
+
+<!--export HADOOP_HOME=/home/hadoop-->
+<!--export HADOOP_CONF_DIR=/home/hadoop/etc/hadoop-->
+<!--export JAVA_HOME=/home/jdk-->
+<!--export SPARK_HOME=/home/spark-->
+<!--export SPARK_WORKER_MEMORY=2G-->
+<!--export SPARK_MASTER_IP=192.168.1.71-->
+<!--export SPARK_LOCAL_DIRS=/home/spark-->
+<!--export SPARK_LIBARY_PATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$HADOOP_HOME/lib/native-->
+
+<!--export PATH=$SCALA_HOME/bin:$SPARK_HOME/bin:$SQOOP_HOME/bin:$HBASE_HOME/bin:$KAFKA_HOME/bin:$FLUME_HOME/bin:$PATH:$JAVA_HOME/bin:$HADOOP_HOME/sbin:$HADOOP_HOME/bin-->
+
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<property>
+    <name>javax.jdo.option.ConnectionURL</name>
+                                              createDatabaseIfNotExist
+    <value>jdbc:myqsl://master:3306/metastore?createDatabaseIfNotExist=true&amp;useSSL=false</value>
+</property>
+<property>
+    <name>javax.jdo.option.ConnectionDriver</name>
+    <value>com.mysql.jdbc.Driver</value>
+</property>
+<property>
+    <name>javax.jdo.option.ConnectionUserName</name>
+    <value>root</value>
+</property>
+<property>
+    <name>javax.jdo.option.ConnectionPassWord</name>
+    <value>Password123$</value>
 </property>
